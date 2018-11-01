@@ -12,6 +12,7 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once DOKU_PLUGIN . 'action.php';
 require_once(DOKU_INC . 'inc/media.php');
 require_once(DOKU_INC . 'inc/infoutils.php');
+require_once(DOKU_PLUGIN . 'secrets.php');
 
 //define for debug
 define ('RUN_STATUS', 'SERVER');
@@ -26,11 +27,11 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
     function getInfo() {
         return array(
             'author' => 'Yvonne Lu',
-            'email' => 'yvonnel@leapinglaptop.com',
+            'email' => 'bmachado@live.ca',
             'date' => '2015-6-4',
             'name' => 'slackinvite plugin',
             'desc' => 'slackinvite plugin uploads a zip of usfm file to a given namespace then unzip it
-                        Basic syntax: {{slackinvite}}',
+            			Basic syntax: {{slackinvite}}',
             'url' => '',
         );
     }
@@ -38,11 +39,11 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
     /**
      * Register its handlers with the DokuWiki's event controller
      */
-    function register(&$controller) {
-       
-        $controller->register_hook('ACTION_HEADERS_SEND', 'BEFORE', $this, '_handle_function_submit');
-       
+    function register(Doku_Event_Handler $controller) {       
+        $controller->register_hook('ACTION_HEADERS_SEND', 'BEFORE', $this, '_handle_function_submit');       
     }
+
+
 
     
     function _handle_function_submit(&$event, $param) {
@@ -69,39 +70,46 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
             $err=true;
         }
 
-        $response = $_POST["g-recaptcha-response"];
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array(
-            'secret' => 'YOUR_SECRET',
-            'response' => $_POST["g-recaptcha-response"]
-        );
-        $options = array(
-            'http' => array (
-                'method' => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        
-        $context  = stream_context_create($options);
-        $verify = file_get_contents($url, false, $context);
-        $captcha_success=json_decode($verify);
-        if ($captcha_success->success==false) {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, [
+            'secret' => $secrets['recaptchaServer'],
+            'response' => $_POST['g-recaptcha-response'],
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        ]);
+
+        $resp = json_decode(curl_exec($ch));
+        curl_close($ch);
+
+        if ($resp->success) {
+            $txt = sprintf($this->getlang('captcha_valid'), $user['fname'], $user['email']);
+            msg($txt, 1);
+            //msg ($this->getlang('recaptcha_valid'),1);
+            // Success
+        } else {
+            // failure
+            $txt = sprintf($this->getlang('captcha_err'), $user['fname'], $user['email']);
+            msg($txt, -1);
             $err=true;
-            msg ($this->getlang('recaptcha_err'),-1);
-        } else if ($captcha_success->success==true) {
         }
        
         if (!$err){
             //<config>
             date_default_timezone_set('America/Phoenix');
             mb_internal_encoding("UTF-8");
-            $slackHostName='hostname';
-            $slackAutoJoinChannels='channelid'; 
-            $slackAuthToken='SlackToken';
+            $slackHostName='orbottestingsquad';
+            $slackAutoJoinChannels='#general'; 
+            $slackAuthToken=$secrets['slackToken'];
             //</config>
             //
             // <invite to slack>
                 $slackInviteUrl='https://'.$slackHostName.'.slack.com/api/users.admin.invite?t='.time();
+
+
 
                 $user['email']=$email;
                 $user['fname']=$fn;
