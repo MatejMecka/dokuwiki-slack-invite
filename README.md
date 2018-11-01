@@ -11,6 +11,15 @@ To use plugin:
 Copy secrets.php.template into a php file called secrets.php, and fill in your secret information. 
 This file is gitignored and will not be pushed to keep your tokens safe.
 
+Where to find tokens:
+reCaptcha Client + Secret tokens: https://www.google.com/recaptcha/admin#list
+
+Slack invite auth token: https://get.slack.help/hc/en-us/articles/215770388
+
+Slack Hostname is the name of the workspace, for example the hostname for the slack group slackgroup.slack.com is slackgroup
+
+Slack default channels to join can be set to 'C04MB1CAH' which is #general, it will add all normal default channels.
+
 After that insert ` {slackinvite} `(CASE SENSITIVE) on a page.  A form will appear.
 After filling out name and email address, click submit.  If successful,
 you should get an invite to join the your slack team in the channel you specified.

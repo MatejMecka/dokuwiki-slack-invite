@@ -18,6 +18,10 @@ include('secrets.php');;
 
 if(!defined('recaptchaClient')) define('recaptchaClient', $secret['recaptchaClient']);
 
+include('lang/en/lang.php');
+if(!defined('btn_signup')) define('btn_signup', $lang['btn_signup']);
+
+
 //require_once(DOKU_INC . 'inc/media.php');
 //require_once(DOKU_INC . 'inc/auth.php');
 
@@ -125,7 +129,7 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
         $form->addElement(form_makeTextField('first_name', '', $this->getlang('first_name'), 'first__name'));
         $form->addElement(form_makeTextField('last_name', '', $this->getlang('last_name'), 'last__name'));
         $form->addElement(form_makeTextField('email', '', $this->getlang('email'), 'email'));
-        $form->addElement(form_makeButton('submit', '', $lang['btn_signup']));
+        $form->addElement(form_makeButton('submit', '', btn_signup));
         $form->endFieldset();
         
         $html .= '<div class="dokuwiki"><p>' . NL;

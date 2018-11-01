@@ -13,6 +13,9 @@ require_once DOKU_PLUGIN . 'action.php';
 require_once(DOKU_INC . 'inc/media.php');
 require_once(DOKU_INC . 'inc/infoutils.php');
 include('secrets.php');
+include('lang/en/lang.php');
+if(!defined('btn_signup')) define('btn_signup', $lang['btn_signup']);
+
 
 if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
 if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
