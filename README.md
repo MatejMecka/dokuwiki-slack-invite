@@ -8,8 +8,8 @@ will not work!
 
 To use plugin:
 
-First modify the action.php script and replace the values from line 26 to 36 with info from your slack!
-After that replace line 6 in /lang/en with your name
+Copy secrets.php.template into a php file called secrets.php, and fill in your secret information. 
+This file is gitignored and will not be pushed to keep your tokens safe.
 
 After that insert ` {slackinvite} `(CASE SENSITIVE) on a page.  A form will appear.
 After filling out name and email address, click submit.  If successful,
