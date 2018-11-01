@@ -16,6 +16,13 @@ include('secrets.php');
 include('lang/en/lang.php');
 if(!defined('btn_signup')) define('btn_signup', $lang['btn_signup']);
 
+if(!defined('info_author')) define('info_author', $lang['info_author']);
+if(!defined('info_email')) define('info_email', $lang['info_email']);
+if(!defined('info_date')) define('info_date', $lang['info_date']);
+if(!defined('info_name')) define('info_name', $lang['info_name']);
+if(!defined('info_desc')) define('info_desc', $lang['info_desc']);
+if(!defined('info_url')) define('info_url', $lang['info_url']);
+
 
 if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
 if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
@@ -33,13 +40,12 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
     
     function getInfo() {
         return array(
-            'author' => 'Yvonne Lu',
-            'email' => 'bmachado@live.ca',
-            'date' => '2015-6-4',
-            'name' => 'slackinvite plugin',
-            'desc' => 'slackinvite plugin uploads a zip of usfm file to a given namespace then unzip it
-            			Basic syntax: {{slackinvite}}',
-            'url' => '',
+            'author' => info_author,
+            'email' => info_email,
+            'date' => info_date,
+            'name' => info_name,
+            'desc' => info_desc,
+            'url' => info_url,
         );
     }
 
