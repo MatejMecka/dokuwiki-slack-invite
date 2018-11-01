@@ -14,7 +14,10 @@ if(!defined('NL')) define('NL', "\n");
 if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once(DOKU_PLUGIN . 'syntax.php');
-require_once(DOKU_PLUGIN . 'secrets.php');
+include('secrets.php');;
+
+if(!defined('recaptchaClient')) define('recaptchaClient', $secret['recaptchaClient']);
+
 //require_once(DOKU_INC . 'inc/media.php');
 //require_once(DOKU_INC . 'inc/auth.php');
 
@@ -26,7 +29,6 @@ define ('RUN_STATUS', 'SERVER');
 class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
 
     var $fh=NULL; //debug file handle
-    
     function getInfo() {
         return array(
             'author' => 'Yvonne Lu',
@@ -68,7 +70,6 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
     }
 
     function render($format, Doku_Renderer $renderer, $data) {
-        
         $this->showDebug('in render $mode='.$mode);
         $renderer->doc .= $this->slackinvite_signinform();
         $renderer->info['cache'] = false;
@@ -97,11 +98,12 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
      *
      *
      */
+    
     function slackinvite_signinform() {
         global $lang;
         global $ID;
+
         $html = '';
-        
         $params = array();
         $params['id'] = 'slackinvite_plugin_id';
         $params['action'] = wl($ID);
@@ -117,7 +119,9 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
         $form->addHidden('source', hsc("slackinvite")); //add source of call, used in action to ignore anything not from this form
         //function form_makeTextField($name, $value='', $label=null, $id='', $class='', $attrs=array()) {
         //$form->addElement(form_makeTextField('new_ns', hsc($ns), $this->getlang('new_ns') . ':', 'upload__ns')); //new namespace
-        $form->addElement('<div class="g-recaptcha" data-sitekey=' . $secrets['recaptchaClient'] . '></div>');
+        // $ye = sprintf('<p>hello', $spaget, '</p>');
+        // $html .= $ye;
+        $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaClient.'"></div>');
         $form->addElement(form_makeTextField('first_name', '', $this->getlang('first_name'), 'first__name'));
         $form->addElement(form_makeTextField('last_name', '', $this->getlang('last_name'), 'last__name'));
         $form->addElement(form_makeTextField('email', '', $this->getlang('email'), 'email'));

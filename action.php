@@ -12,8 +12,12 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once DOKU_PLUGIN . 'action.php';
 require_once(DOKU_INC . 'inc/media.php');
 require_once(DOKU_INC . 'inc/infoutils.php');
-require_once(DOKU_PLUGIN . 'secrets.php');
+include('secrets.php');
 
+if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
+if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
+if(!defined('slackHostname')) define('slackHostname', $secret['slackHostname']);
+if(!defined('recaptchaServer')) define('recaptchaServer', $secret['recaptchaServer']);
 //define for debug
 define ('RUN_STATUS', 'SERVER');
 
@@ -77,7 +81,7 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, [
-            'secret' => $secrets['recaptchaServer'],
+            'secret' => recaptchaServer,
             'response' => $_POST['g-recaptcha-response'],
             'remoteip' => $_SERVER['REMOTE_ADDR']
         ]);
@@ -101,9 +105,9 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
             //<config>
             date_default_timezone_set('America/Phoenix');
             mb_internal_encoding("UTF-8");
-            $slackHostName='orbottestingsquad';
-            $slackAutoJoinChannels='#general'; 
-            $slackAuthToken=$secrets['slackToken'];
+            $slackHostName=slackToken;
+            $slackAutoJoinChannels=slackChannels; 
+            $slackAuthToken=slackToken;
             //</config>
             //
             // <invite to slack>

@@ -16,4 +16,7 @@ $lang['success']='Invitation Sent';
 $lang['failed']='Invitation Failed';
 $lang['captcha_err']='CAPTCHA Failed';
 $lang['captcha_valid']='CAPTCHA worked';
+$lango = '6LdaJHcUAAAAAGBKEzwayMDdPTpXhKHD7LpyTzBX';
+
+
 
