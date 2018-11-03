@@ -3,7 +3,7 @@
 // settings must be present and set appropriately for the language
 $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
-$lang['signup'] = "YOUR ORG NAME's Slack Sign Up Form"; //plase change this with your orgname name eg. Google's
+$lang['signup'] = "YOUR ORG NAME's Slack Sign Up Form"; //please change this with your orgname name eg. Google's
 $lang['first_name'] = "First Name:  ";
 $lang['last_name'] = "Last Name:  ";
 $lang['email'] = "E-Mail:  ";
