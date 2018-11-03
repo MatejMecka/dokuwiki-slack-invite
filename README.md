@@ -12,7 +12,7 @@ Copy secrets.php.template into a php file called secrets.php, and fill in your s
 This file is gitignored and will not be pushed to keep your tokens safe.
 
 Where to find tokens:
-reCaptcha Client (Sitekey) + Secret(Server) tokens: https://www.google.com/recaptcha/admin#list
+reCaptcha Client (Sitekey) + Server(Secret) tokens: https://www.google.com/recaptcha/admin#list
 
 Slack invite auth token: https://get.slack.help/hc/en-us/articles/215770388
 
