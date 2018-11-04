@@ -27,7 +27,7 @@ if(!defined('info_url')) define('info_url', $lang['info_url']);
 if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
 if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
 if(!defined('slackHostname')) define('slackHostname', $secret['slackHostname']);
-if(!defined('recaptchaServer')) define('recaptchaServer', $secret['recaptchaServer']);
+if(!defined('recaptchaSecret')) define('recaptchaSecret', $secret['recaptchaSecret']);
 //define for debug
 define ('RUN_STATUS', 'SERVER');
 
@@ -90,7 +90,7 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, [
-            'secret' => recaptchaServer,
+            'secret' => recaptchaSecret,
             'response' => $_POST['g-recaptcha-response'],
             'remoteip' => $_SERVER['REMOTE_ADDR']
         ]);
