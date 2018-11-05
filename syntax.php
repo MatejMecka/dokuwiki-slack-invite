@@ -125,14 +125,7 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
         //$form->addElement(form_makeTextField('new_ns', hsc($ns), $this->getlang('new_ns') . ':', 'upload__ns')); //new namespace
         // $ye = sprintf('<p>hello', $spaget, '</p>');
         // $html .= $ye;
-        if (recaptchaV3 != False){
-            $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaSitekey.'"></div>');
-        }
-        else {
-            $captcha = $form->addElement(form_makeButton('submit', '', 'Captcha'));
-            $captcha->attr('class', 'g-recaptcha');
-            $captcha->attr('data-sitekey',.recaptchaSitekey.);
-        }
+        $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaSitekey.'"></div>');
         $form->addElement(form_makeTextField('first_name', '', $this->getlang('first_name'), 'first__name'));
         $form->addElement(form_makeTextField('last_name', '', $this->getlang('last_name'), 'last__name'));
         $form->addElement(form_makeTextField('email', '', $this->getlang('email'), 'email'));
