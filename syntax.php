@@ -155,3 +155,4 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
 }
 
 //Setup VIM: ex: et ts=4 enc=utf-8 :
+

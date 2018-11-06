@@ -208,3 +208,4 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
     
     
 }
+
