@@ -16,7 +16,7 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once(DOKU_PLUGIN . 'syntax.php');
 include('secrets.php');;
 
-if(!defined('recaptchaSitekey')) define('recaptchaSitekey', $secret['recaptchaSitekey']);
+if(!defined('recaptchaV3')) define('recaptchaV3', $secret['recaptchaV3']);
 
 include('lang/en/lang.php');
 if(!defined('btn_signup')) define('btn_signup', $lang['btn_signup']);
@@ -41,7 +41,7 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
             'name' => 'slackinvite plugin',
             'desc' => 'slackinvite plugin a sign up form for users who want to '
                         .'join the team43 channel on slack ' 
-            		.'Basic syntax: {{slackinvite}}',
+                    .'Basic syntax: {{slackinvite}}',
             'url' => '',
         );
     }
@@ -125,7 +125,12 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
         //$form->addElement(form_makeTextField('new_ns', hsc($ns), $this->getlang('new_ns') . ':', 'upload__ns')); //new namespace
         // $ye = sprintf('<p>hello', $spaget, '</p>');
         // $html .= $ye;
-        $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaSitekey.'"></div>');
+        if (recaptchaV3 != False){
+            $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaSitekey.'"></div>');
+        }
+        else {
+            $form->addElement('<button class="g-recaptcha" data-sitekey='.recaptchaSitekey.'>'.btn_signup.'</button>');
+        }
         $form->addElement(form_makeTextField('first_name', '', $this->getlang('first_name'), 'first__name'));
         $form->addElement(form_makeTextField('last_name', '', $this->getlang('last_name'), 'last__name'));
         $form->addElement(form_makeTextField('email', '', $this->getlang('email'), 'email'));
