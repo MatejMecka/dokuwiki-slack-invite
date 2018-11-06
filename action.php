@@ -28,6 +28,7 @@ if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
 if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
 if(!defined('slackHostname')) define('slackHostname', $secret['slackHostname']);
 if(!defined('recaptchaSecret')) define('recaptchaSecret', $secret['recaptchaSecret']);
+if(!defined('cloudfareEnabled')) define('cloudfareEnabled', $secret['cloudfareEnabled']);
 //define for debug
 define ('RUN_STATUS', 'SERVER');
 
@@ -89,6 +90,16 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
         curl_setopt($ch, CURLOPT_POST, 1);
+
+        $userIP = '';
+
+        if (cloudfareEnabled != True) {
+            $userIP = $_SERVER['REMOTE_ADDR'];
+        }
+        else{
+            $userIP = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        }
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, [
             'secret' => recaptchaSecret,
             'response' => $_POST['g-recaptcha-response'],

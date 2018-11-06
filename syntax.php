@@ -16,6 +16,7 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once(DOKU_PLUGIN . 'syntax.php');
 include('secrets.php');;
 
+if(!defined('recaptchaSitekey')) define('recaptchaSitekey', $secret['recaptchaSitekey']);
 if(!defined('recaptchaV3')) define('recaptchaV3', $secret['recaptchaV3']);
 
 include('lang/en/lang.php');
