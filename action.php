@@ -28,7 +28,7 @@ if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
 if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
 if(!defined('slackHostname')) define('slackHostname', $secret['slackHostname']);
 if(!defined('recaptchaSecret')) define('recaptchaSecret', $secret['recaptchaSecret']);
-if(!defined('cloudfareEnabled')) define('cloudfareEnabled', $secret['cloudfareEnabled']);
+if(!defined('cloudflareEnabled')) define('cloudfareEnabled', $secret['cloudfareEnabled']);
 //define for debug
 define ('RUN_STATUS', 'SERVER');
 
