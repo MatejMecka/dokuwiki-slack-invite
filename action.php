@@ -28,14 +28,13 @@ if(!defined('slackToken')) define('slackToken', $secret['slackToken']);
 if(!defined('slackChannels')) define('slackChannels', $secret['slackChannels']);
 if(!defined('slackHostname')) define('slackHostname', $secret['slackHostname']);
 if(!defined('recaptchaSecret')) define('recaptchaSecret', $secret['recaptchaSecret']);
-if(!defined('cloudflareEnabled')) define('cloudfareEnabled', $secret['cloudfareEnabled']);
+if(!defined('cloudflareEnabled')) define('cloudflareEnabled', $secret['cloudflareEnabled']);
 //define for debug
 define ('RUN_STATUS', 'SERVER');
 
 
 
 class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
-
     var $fh=NULL;
     //var $tmpdir = NULL;
     
@@ -93,7 +92,7 @@ class action_plugin_slackinvite extends DokuWiki_Action_Plugin {
 
         $userIP = '';
 
-        if (cloudfareEnabled != True) {
+        if (cloudflareEnabled != True) {
             $userIP = $_SERVER['REMOTE_ADDR'];
         }
         else{
