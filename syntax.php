@@ -127,10 +127,11 @@ class syntax_plugin_slackinvite extends DokuWiki_Syntax_Plugin {
         // $ye = sprintf('<p>hello', $spaget, '</p>');
         // $html .= $ye;
         if (recaptchaV3 != False){
-            $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaSitekey.'"></div>');
+	    $form->addElement('<div class="g-recaptcha" data-sitekey="'.recaptchaSitekey.'"></div>');
         }
         else {
-            $form->addElement('<button class="g-recaptcha" data-sitekey='.recaptchaSitekey.'>'.btn_signup.'</button>');
+	  $form->addElement('<button class="g-recaptcha" data-callback="onSubmit" data-sitekey='.recaptchaSitekey.'>'.btn_signup.'</button>');
+	  $html .= '<script>function onSubmit(token) { document.getElementById("slackinvite_plugin_id").submit(); }</script>' .NL;
         }
         $form->addElement(form_makeTextField('first_name', '', $this->getlang('first_name'), 'first__name'));
         $form->addElement(form_makeTextField('last_name', '', $this->getlang('last_name'), 'last__name'));
